@@ -1,0 +1,412 @@
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.lang.Exception;
+class EmployeeNotFoundException extends Exception
+{
+  EmployeeNotFoundException(String message)
+  {
+    super(message);
+  }
+}
+class Employee
+  {
+    int empid;
+    String ename;
+    int age;
+    String position;
+    double salary;
+    String mobileno;
+    Employee(int empid,String ename,int age,String position,double salary,String mobileno)
+    {
+      this.empid=empid;
+      this.ename=ename;
+      this.age=age;
+      this.position=position;
+      this.salary=salary;
+      this.mobileno=mobileno;
+    }
+  }
+class StaffTrackPro
+  {
+    Scanner sc=new Scanner(System.in);
+    ArrayList<Employee>el=new ArrayList<Employee>();
+    public void addEmployee()
+    {
+      int id;
+        while(true)
+        {
+          System.out.println("Enter Employee Id");
+           id=sc.nextInt();
+          sc.nextLine();
+          boolean isUnique=true;
+          for(Employee value:el)
+            {
+              if(value.empid==id)
+              {
+                System.out.println("enter unique id only");
+                isUnique=false;
+                break;
+              }
+            }
+          if(isUnique)
+          {
+            System.out.println("id entered");
+            break;
+          }
+        }
+      System.out.println("Enter Employee Name");
+      String ename=sc.nextLine();
+      System.out.println("Enter Employee age");
+      int age=sc.nextInt();
+      sc.nextLine();
+      System.out.println("Enter Employee Position");
+      String position=sc.nextLine();
+      double salary;
+      while(true)
+        {
+          System.out.println("enter the salary");
+          salary=sc.nextDouble();
+         if(salary>0)
+         {
+            System.out.println("Salary accepted");
+            break;
+          }
+         else
+        System.out.println("salary must be greater than zero only");
+}
+      String mobile;
+      while(true)
+        {
+          System.out.println("enter a mobile number");
+          mobile=sc.next();
+          if(mobile.length()==10 && (mobile.startsWith("9")||mobile.startsWith("8")||mobile.startsWith("7")||mobile.startsWith("6")))
+          {
+            System.out.println("Mobile number is valid");
+            break;
+          }
+          else{
+            System.out.println("enter valid mobile number");
+          }
+       }
+      Employee e1=new 
+      Employee(id,ename,age,position,salary,mobile);
+      el.add(e1);
+      System.out.println("Employee Added");
+    }
+    public void viewEmployees()
+    {
+      if(el.size()>0)
+      {
+        System.out.println("All Employee deatils are");
+      for(Employee data:el)
+        {
+          System.out.println("Id :"+data.empid+"\nName :"+data.ename+"\nAge :"+data.age+"\nPosition :"+data.position+"\nSalary :"+data.salary+"\nMobile :"+data.mobileno);
+          System.out.println("-----------------------------------------------------------");
+        }
+    }
+      else
+      {
+        System.out.println("The List is Empty");
+      }
+    }
+   public void searchEmployee() throws EmployeeNotFoundException
+    {
+      if(el.size()>0)
+      {
+      System.out.println("Enter 1 for Search for UserId\nEnter 2 For Search for name\nEnter 3 for Search by position\nEnter 4 for Search by age ");
+      int choice=sc.nextInt();
+      sc.nextLine();
+          switch(choice)
+            {
+                case 1:
+                System.out.println("enter the employee id to search");
+                int searchById=sc.nextInt();
+                boolean isFound=false;
+          for(Employee value:el)
+         {
+          int data=value.empid;
+          if(data==(searchById))
+          {
+            System.out.println(value.empid+" "+value.ename+" "+value.age+" "+value.position+" "+value.salary+" "+value.mobileno);
+             isFound=true;
+          }
+         } 
+            if(isFound==false)
+          {
+            throw new EmployeeNotFoundException("For this Id No Employee is not Found in list \n Exception Handled");
+          }
+                break;
+              case 2:
+                System.out.println("enter the employee name to search");
+            String searchByName=sc.nextLine();
+                boolean isName=false;
+          for(Employee value:el)
+         {
+          String data=value.ename;
+          if(data.equals(searchByName))
+          {
+            System.out.println(value.empid+" "+value.ename+" "+value.age+" "+value.position+" "+value.salary+" "+value.mobileno);
+           isName=true; 
+          }
+           }
+           if(isName==false)
+          {
+            throw new EmployeeNotFoundException("For this Name No Employee is not Found in list \n Exception Handled");
+          }
+                 break;
+              case 3:
+                System.out.println("enter the employee position to search");
+                String searchByPosition=sc.nextLine();
+                boolean isPosition=false;
+          for(Employee value:el)
+         {
+          String data=value.position;
+          if(data.equals(searchByPosition))
+          {
+            System.out.println(value.empid+" "+value.ename+" "+value.age+" "+value.position+" "+value.salary+" "+value.mobileno);
+            isPosition=true;
+          }
+         }
+           if(isPosition==false)
+          {
+            throw new EmployeeNotFoundException("For this Position No Employee is not Found in list \n Exception Handled");
+          }
+                 break;
+              case 4:
+                System.out.println("enter the employee age to search");
+            int searchByAge=sc.nextInt();
+            boolean isAge=false;
+          for(Employee value:el)
+         {
+          int data=value.age;
+          if(data==(searchByAge))
+          {
+            System.out.println(value.empid+" "+value.ename+" "+value.age+" "+value.position+" "+value.salary+" "+value.mobileno);
+           isAge=true; 
+          }
+           }
+           if(isAge==false)
+          {
+            throw new EmployeeNotFoundException("For this Age No Employee is not Found in list \n Exception Handled");
+          }
+           
+                break;
+              default:
+                System.out.println("invalid option enter 1 to 2 ");
+            }
+            } 
+else
+    System.out.println("the List is Empty we cannot perform Search Operation");
+}
+    public void updateData()
+    {
+      if(el.size()>0)
+      {
+        System.out.println("Enter Employee Id You want to update the Deatails");
+        int id=sc.nextInt();
+        sc.nextLine();
+      for(Employee value:el)
+        {
+          if(value.empid==id)
+          {
+            System.out.println("Enter the Option \n enter a To Update the Employee Name \n enter b To Update Employee Age \n enter c To Update the Employee Position \n enter d To Update the Employee Salary \n enter e To Update the Employee MobileNo");
+            char ch=sc.next().charAt(0);
+            switch(ch)
+            {
+              case 'a':
+                System.out.println("Enter the name You want to update");
+                String name=sc.next();
+                for(Employee value1:el)
+                  {
+                    if(value1.empid==id)
+                    {
+                value1.ename=name;
+                      System.out.println("Employee Name Updated");
+                  }
+                  }
+                break;
+              case 'b':
+                System.out.println("Enter the Age you want to update");
+                int eage=sc.nextInt();
+                for(Employee value2:el)
+                  {
+                  if(value2.empid==id)
+                  {
+                    value2.age=eage;
+                    System.out.println("Age updated");
+                  }
+                  }
+                break;
+              case 'c':
+                System.out.println("Enter the Position you want to Upadte");
+                String pos=sc.next();
+                for(Employee value3:el)
+                  {
+                    if(value3.empid==id)
+                    {
+                value3.position=pos;
+                      System.out.println("Position Updated");
+                    }
+                  }
+                break;
+              case 'd':
+                System.out.println("Enter the Salary you want to Update");
+                double sal=sc.nextDouble();
+                for(Employee value4:el)
+                  {
+                    if(value4.empid==id)
+                    {
+                value.salary=sal;
+                      System.out.println("Salary Updated");
+                    }
+                  }
+                break;
+              case 'e':
+                System.out.println("Enter the Mobile no you want to update");
+                String no=sc.next();
+                for(Employee value5:el)
+                  {
+                    if(value5.empid==id)
+                    {
+                      value.mobileno=no;
+                      System.out.println("Mobile No Updated");
+                    }
+                  }
+                break;
+              default:
+                System.out.println("Invalid Input please Reenter");
+                break;
+            }
+          }
+          else
+          {
+            System.out.println("The Id you enter is not found in the data");
+          }
+        }
+      }
+        else 
+        System.out.println("The List is Empty so we can't do the Update Operation");
+    }       
+    public void deleteEmployee()
+    {
+      boolean isFound=false;
+      if(el.size()>0)
+      {
+      System.out.println("enter the employee id to delete");
+      int id=sc.nextInt();
+      Iterator<Employee> itr=el.iterator();
+      while(itr.hasNext())
+        {
+           Employee value=itr.next();
+          if(value.empid==id)
+          {
+           itr.remove();
+            System.out.println("the employee deleted");
+            isFound=true;
+            break;
+        }
+        }
+    if(isFound==false)
+    {
+        System.out.println(id+" ID is found in the list to delete");
+    }
+      }
+        else
+      System.out.println("the list is empty delete option is not possible");
+    }
+    public void calculateSalary()
+    {
+      double totalSalary=0.0;
+      if(el.size()>0)
+      {
+      for(Employee value:el)
+        {
+          totalSalary=totalSalary+value.salary;       
+        }
+      System.out.println("total salary credited to the Employees are:"+totalSalary);
+      System.out.println("------------------------------");
+    }
+      else
+        System.out.println("List is Empty We cannot  Calculated the Salary");
+      }
+    public void SearchByAgeRange()
+    {
+      if(el.size()>0)
+      {
+        boolean employeeFound=false;
+        System.out.println("Enter starting age");
+        int startAge=sc.nextInt();
+        System.out.println("Enter ending age");
+        int endAge=sc.nextInt();
+        for(Employee value:el)
+          {
+            if(value.age>=startAge && value.age<=endAge)
+            {
+              System.out.println(value.empid+" "+value.ename+" "+value.age+" "+value.position+" "+value.salary+" "+value.mobileno);
+               System.out.println("------------------------------");
+              employeeFound=true;
+            }
+          }
+        if(employeeFound==false)
+        {
+          System.out.println("no employee is present in that age range");
+        }
+      }
+      else
+        System.out.println("the list is empty we cannot perform Search operation");
+    }
+public void staffTrackMenuOptions()
+  {
+  Scanner se=new Scanner(System.in);
+  do
+    {
+      System.out.println("Choose any Option \n Enter 1 Add employee \n Enter 2 View All Employees \n Enter 3 Search For the Employee \n Enter 4 Update the Employee information \n Enter 5 Delete an Employee \n Enter 6 Calculate Salary \n Enter 7 Search For the Employee By Age Range \n Enter 8 Exit");
+      int choice=se.nextInt();
+      switch(choice)
+        {
+          case 1:
+            System.out.println("Enter Employee Details");
+            addEmployee();
+            break;
+          case 2:
+            viewEmployees();
+            break;
+          case 3:
+            try
+              {
+            searchEmployee();
+              }
+            catch(EmployeeNotFoundException e)
+              {
+                System.out.println(e);
+              }
+            break;
+         case 4:
+            updateData();
+            break;
+          case 5:
+          deleteEmployee();
+            break;
+          case 6:
+          calculateSalary();
+            break;
+          case 7:
+           SearchByAgeRange();
+            break;
+          case 8:
+            System.out.println("exiting....");
+            System.exit(0);
+          default:
+            System.out.println("Invalid Option Please Reenter");
+            break;
+        }
+    }while(true);
+  }
+public static void main(String[]args)
+  {
+  Scanner se=new Scanner(System.in);
+  StaffTrackPro track=new StaffTrackPro();
+  track.staffTrackMenuOptions();
+}
+}
